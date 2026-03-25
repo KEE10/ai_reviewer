@@ -2,7 +2,7 @@ import asyncio
 import logging
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import Any, AsyncIterator, Awaitable, Callable, DefaultDict, Dict, List, Optional, Protocol, TypeVar
+from typing import Any, Awaitable, Callable, DefaultDict, List, TypeVar
 
 logger = logging.getLogger(__name__)
 
@@ -12,6 +12,7 @@ EventHandler = Callable[[T], Awaitable[None]]
 
 PR_CREATED = "pr.created"
 PR_REVIEWED = "pr.reviewed"
+
 
 @dataclass(frozen=True)
 class Event:

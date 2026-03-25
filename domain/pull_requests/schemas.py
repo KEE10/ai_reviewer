@@ -9,22 +9,26 @@ class Action(str, Enum):
     synchronize = "synchronize"
     opened = "opened"
 
+
 class PullRequest(BaseModel):
     id: int
     title: str
     draft: bool
     body: str | None = None
-    head: dict 
-    base: dict 
+    head: dict
+    base: dict
+
 
 class Repository(BaseModel):
     id: int
     name: str
     full_name: str
 
+
 class Sender(BaseModel):
     id: int
     login: str
+
 
 class WebhookPayload(BaseModel):
     action: Action
@@ -32,6 +36,7 @@ class WebhookPayload(BaseModel):
     pull_request: PullRequest
     repository: Repository
     sender: Sender
+
 
 class PullRequestWithReviewsResponse(BaseModel):
     pull_request_id: str

@@ -14,17 +14,17 @@ class ReviewRepository:
         pull_request_id: int,
         ai_model: str,
         summary: Optional[str] = None,
-        details: Optional[dict] = None
+        details: Optional[dict] = None,
     ) -> ReviewModel:
         review = ReviewModel(
             pull_request_id=pull_request_id,
             status="created",
             ai_model=ai_model,
             summary=summary,
-            details=details
+            details=details,
         )
         self.session.add(review)
-        await self.session.flush()  
+        await self.session.flush()
         return review
 
     async def get_reviews(
@@ -32,7 +32,7 @@ class ReviewRepository:
         page: int = 1,
         limit: int = 10,
         order_by: str = "created_at",
-        order: str = "desc"
+        order: str = "desc",
     ) -> List[ReviewModel]:
         stmt = select(ReviewModel)
 
@@ -69,11 +69,7 @@ class ReviewRepository:
         return review, comments
 
     async def update_review(self, review_id: str, **kwargs) -> bool:
-        stmt = (
-            update(ReviewModel)
-            .where(ReviewModel.id == review_id)
-            .values(**kwargs)
-        )
+        stmt = update(ReviewModel).where(ReviewModel.id == review_id).values(**kwargs)
         result = await self.session.execute(stmt)
         return result.rowcount > 0
 
@@ -83,23 +79,21 @@ class ReviewRepository:
         file_path: Optional[str],
         line_number: Optional[int],
         severity: Optional[str],
-        message: Optional[str]
+        message: Optional[str],
     ) -> ReviewCommentModel:
         comment = ReviewCommentModel(
             review_id=review_id,
             file_path=file_path,
             line_number=line_number,
             severity=severity,
-            message=message
+            message=message,
         )
         self.session.add(comment)
         await self.session.flush()
         return comment
 
     async def add_review_comments(
-        self,
-        review_id: str,
-        comments: List[dict]
+        self, review_id: str, comments: List[dict]
     ) -> List[ReviewCommentModel]:
         comment_objects = [
             ReviewCommentModel(
@@ -107,7 +101,7 @@ class ReviewRepository:
                 file_path=comment.get("file_path"),
                 line_number=comment.get("line_number"),
                 severity=comment.get("severity"),
-                message=comment.get("message")
+                message=comment.get("message"),
             )
             for comment in comments
         ]

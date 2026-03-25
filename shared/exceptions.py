@@ -13,7 +13,6 @@ class AppException(Exception):
 
 
 class InvalidDataInWebhookException(AppException):
-
     def __init__(
         self,
         message: str = "Invalid webhook payload",
@@ -28,7 +27,10 @@ class WebhookAlreadyProcessedException(AppException):
         message: str = "Webhook already processed",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="webhook_already_processed", payload=payload)
+        super().__init__(
+            message=message, code="webhook_already_processed", payload=payload
+        )
+
 
 class WebhookSignatureMissingException(AppException):
     def __init__(
@@ -36,7 +38,9 @@ class WebhookSignatureMissingException(AppException):
         message: str = "Webhook signature missing",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="webhook_signature_missing", payload=payload)
+        super().__init__(
+            message=message, code="webhook_signature_missing", payload=payload
+        )
 
 
 class WebhookWrongSignatureException(AppException):
@@ -45,7 +49,10 @@ class WebhookWrongSignatureException(AppException):
         message: str = "Webhook wrong signature",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="webhook_wrong_signature", payload=payload)
+        super().__init__(
+            message=message, code="webhook_wrong_signature", payload=payload
+        )
+
 
 class PRNotReadyForReview(AppException):
     def __init__(
@@ -53,7 +60,9 @@ class PRNotReadyForReview(AppException):
         message: str = "PR not ready for review",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="pr_not_ready_for_review", payload=payload)
+        super().__init__(
+            message=message, code="pr_not_ready_for_review", payload=payload
+        )
 
 
 class GithubAuthenticationFailedException(AppException):
@@ -73,6 +82,7 @@ class DiffFetchFailedException(AppException):
     ) -> None:
         super().__init__(message=message, code="diff_fetch_failed", payload=payload)
 
+
 class PublishReviewGithubFailedException(AppException):
     def __init__(
         self,
@@ -81,13 +91,16 @@ class PublishReviewGithubFailedException(AppException):
     ) -> None:
         super().__init__(message=message, code="publish_review_failed", payload=payload)
 
+
 class AiProviderAuthenticationFailedException(AppException):
     def __init__(
         self,
         message: str = "AI provider authentication failed",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="ai_provider_auth_failed", payload=payload)
+        super().__init__(
+            message=message, code="ai_provider_auth_failed", payload=payload
+        )
 
 
 class AiProviderReviewException(AppException):
@@ -96,7 +109,9 @@ class AiProviderReviewException(AppException):
         message: str = "AI provider review failed",
         payload: Optional[Mapping[str, Any]] = None,
     ) -> None:
-        super().__init__(message=message, code="ai_provider_review_failed", payload=payload)
+        super().__init__(
+            message=message, code="ai_provider_review_failed", payload=payload
+        )
 
 
 class PublishReviewGithubFailedException(AppException):
