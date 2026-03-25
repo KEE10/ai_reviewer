@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, desc, asc
 
+from .schemas import WebhookPayload
 from .models import PullRequestModel
 from domain.reviews.models import ReviewModel
 
@@ -17,7 +18,7 @@ class PullRequestRepository:
         )
         return pr.scalar_one_or_none()
 
-    async def insert_pull_request(self, pull_request_id: str):
+    async def insert_pull_request(self, webhook_payload: WebhookPayload):
         pr_unique_id = f"{webhook_payload.repository.full_name}#{webhook_payload.number}@{webhook_payload.pull_request.head['sha']}"
 
         pr = PullRequestModel(

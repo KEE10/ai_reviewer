@@ -45,7 +45,7 @@ async def handle_webhook(
     if not verify_signature(gh_payload, x_hub_signature_256):
         raise HTTPException(status_code=403, detail="Invalid signature")
 
-    if webhook_payload.pull_request.draft == True:
+    if webhook_payload.pull_request.draft:
         return {"status": "PR not ready for review"}
 
     try:

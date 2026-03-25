@@ -83,15 +83,6 @@ class DiffFetchFailedException(AppException):
         super().__init__(message=message, code="diff_fetch_failed", payload=payload)
 
 
-class PublishReviewGithubFailedException(AppException):
-    def __init__(
-        self,
-        message: str = "Publish review failed",
-        payload: Optional[Mapping[str, Any]] = None,
-    ) -> None:
-        super().__init__(message=message, code="publish_review_failed", payload=payload)
-
-
 class AiProviderAuthenticationFailedException(AppException):
     def __init__(
         self,

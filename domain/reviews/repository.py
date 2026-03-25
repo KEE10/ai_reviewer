@@ -2,7 +2,7 @@ from typing import List, Optional
 from sqlalchemy import select, asc, desc, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .models import ReviewModel, ReviewCommentModel
+from domain.reviews.models import ReviewModel, ReviewCommentModel
 
 
 class ReviewRepository:
