@@ -1,7 +1,4 @@
-version: '3.8'
-
 services:
-  # FastAPI Backend
   backend:
     build:
       context: .
@@ -9,15 +6,6 @@ services:
     container_name: fastapi-backend
     ports:
       - "8000:8000"
-    environment:
-      - DATABASE_URL=${DATABASE_URL}
-      - DEBUG=${DEBUG}
-      - ENVIRONMENT=${ENVIRONMENT}
-      - GITHUB_TOKEN=${GITHUB_TOKEN}
-      - CLAUDE_API_KEY=${CLAUDE_API_KEY}
-    depends_on:
-      db:
-        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped

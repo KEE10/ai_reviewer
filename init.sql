@@ -1,3 +1,6 @@
+SELECT 'CREATE DATABASE ai_reviewer' 
+WHERE NOT EXISTS (SELECT FROM pg_database WHERE datname = 'ai_reviewer')\gexec
+
 -- CREATE TABLES
 CREATE TABLE IF NOT EXISTS pull_requests (
     id BIGSERIAL PRIMARY KEY,

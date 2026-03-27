@@ -30,8 +30,8 @@ class Settings(BaseSettings):
 
     log_level: str = "INFO"
 
-    class Config:
-        env_file = ".env"
+    # class Config:
+    #     env_file = ".env"
 
 
 settings = Settings()
