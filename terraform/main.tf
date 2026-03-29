@@ -49,12 +49,17 @@ resource "aws_instance" "app" {
     associate_public_ip_address = true
     user_data     = <<-EOF
         #!/bin/bash
-        apt-get update
-        apt-get install -y docker.io docker-compose-plugin
+        yum update -y
+        yum install -y docker
         systemctl enable docker
         systemctl start docker
-        usermod -aG docker ubuntu
+        usermod -aG docker ec2-user
         mkdir -p /app
+        chown ec2-user:ec2-user /app
+        chmod 755 /app
+
+        curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
     EOF
 }
 
