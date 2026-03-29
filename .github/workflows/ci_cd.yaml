@@ -157,6 +157,9 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
+            -o SendEnv=IMAGE_TAG \
+            -o SendEnv=DOCKER_HUB_USERNAME \
+            -o SendEnv=DOCKER_HUB_TOKEN \
             ec2-user@${{ secrets.EC2_HOST }} << "ENDSSH"
             set -ex  # Exit on any error and print each command
 
