@@ -116,14 +116,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Get image tag
-        id: image
-        run: |
-          # Get the SHA-based tag for this specific commit
-          echo "IMAGE_TAG=${{ needs.build.outputs.image_tag }}" >> $GITHUB_OUTPUT
-          echo "Deploying image: ${IMAGE_TAG}"
-
+        
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
@@ -159,7 +152,7 @@ jobs:
             echo  "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
             echo "Pulling new image"
-            docker pull ${IMAGE_TAG}
+            docker pull ${{ needs.build.outputs.image_tag }}
 
             echo "Stopping old containers"
             docker compose down --remove-orphans
