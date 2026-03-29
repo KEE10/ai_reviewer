@@ -154,6 +154,8 @@ jobs:
             echo "Pulling new image"
             docker pull ${{ env.DOCKER_HUB_REPOSITORY }}:latest
 
+            cd /app
+            
             echo "Stopping old containers"
             docker-compose down --remove-orphans
 
