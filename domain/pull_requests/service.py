@@ -13,13 +13,13 @@ from .repository import PullRequestRepository
 from .schemas import WebhookPayload, Action
 
 
-def verify_signature(payload: dict, github_token: str):
+def verify_signature(payload: dict, github_signature: str):
     secret = settings.github_secret.encode("utf-8")
     expected_signature = (
         "sha256=" + hmac.new(secret, payload, hashlib.sha256).hexdigest()
     )
 
-    return hmac.compare_digest(github_token, expected_signature)
+    return hmac.compare_digest(github_signature, expected_signature)
 
 
 async def atomic_insert_pull_request_and_review(

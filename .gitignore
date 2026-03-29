@@ -5,6 +5,7 @@ venv/
 ENV/
 .vscode/
 .env
+.env.dev
 *.tfvars
 !terraform.tfvars.example
 .terraform/
