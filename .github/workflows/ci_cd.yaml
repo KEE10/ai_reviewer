@@ -157,11 +157,8 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
-            ec2-user@${{ secrets.EC2_HOST }} \
-            DOCKER_HUB_TOKEN="$DOCKER_HUB_TOKEN" \
-            DOCKER_HUB_USERNAME="$DOCKER_HUB_USERNAME" \
-            IMAGE_TAG="$IMAGE_TAG" << 'ENDSSH'
-            set -e  # Exit on any error
+            ec2-user@${{ secrets.EC2_HOST }} << 'ENDSSH'
+            set -ex  # Exit on any error and print each command
 
             echo "Logging into Docker Hub"
             echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
