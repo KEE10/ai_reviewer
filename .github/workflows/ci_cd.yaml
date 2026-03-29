@@ -159,7 +159,7 @@ jobs:
             echo  "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
             echo "Pulling new image"
-            docker pull "${{ steps.image.outputs.IMAGE_TAG }}"
+            docker pull ${IMAGE_TAG}
 
             echo "Stopping old containers"
             docker compose down --remove-orphans
