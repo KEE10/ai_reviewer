@@ -137,11 +137,11 @@ jobs:
           scp -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
             docker-compose.yml \
-            ubuntu@${{ secrets.EC2_HOST }}:/app/docker-compose.yml
+            ec2-user@${{ secrets.EC2_HOST }}:/app/docker-compose.yml
 
       - name: Create .env on EC2
         run: |
-          ssh -i ~/.ssh/deploy_key ubuntu@${{ secrets.EC2_HOST }} "cat > /app/.env << 'EOF'
+          ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} "cat > /app/.env << 'EOF'
           DATABASE_URL=${{ secrets.DATABASE_URL }}
           GH_TOKEN=${{ secrets.GH_TOKEN }}
           CLAUDE_API_KEY=${{ secrets.CLAUDE_API_KEY }}
@@ -157,7 +157,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
-            ubuntu@${{ secrets.EC2_HOST }} \
+            ec2-user@${{ secrets.EC2_HOST }} \
             DOCKER_HUB_TOKEN="$DOCKER_HUB_TOKEN" \
             DOCKER_HUB_USERNAME="$DOCKER_HUB_USERNAME" \
             IMAGE_TAG="$IMAGE_TAG" << 'ENDSSH'
@@ -191,7 +191,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
-            ubuntu@${{ secrets.EC2_HOST }} << 'ENDSSH'
+            ec2-user@${{ secrets.EC2_HOST }} << 'ENDSSH'
             set -e
 
             # Check if containers are running
