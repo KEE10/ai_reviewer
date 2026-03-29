@@ -1,4 +1,5 @@
 services:
   backend:
+    build: null
     image: khalelam/ai-reviewer:latest
     
