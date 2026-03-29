@@ -150,24 +150,17 @@ jobs:
 
       - name: Deploy to EC2
         id: deploy
-        env:
-          IMAGE_TAG: ${{ steps.image.outputs.IMAGE_TAG }}
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
           ssh -i ~/.ssh/deploy_key \
             -o StrictHostKeyChecking=accept-new \
-            -o SendEnv=IMAGE_TAG \
-            -o SendEnv=DOCKER_HUB_USERNAME \
-            -o SendEnv=DOCKER_HUB_TOKEN \
-            ec2-user@${{ secrets.EC2_HOST }} << "ENDSSH"
+            ec2-user@${{ secrets.EC2_HOST }} << 'ENDSSH'
             set -ex  # Exit on any error and print each command
 
             echo "Logging into Docker Hub"
-            echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+            echo  "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
             echo "Pulling new image"
-            docker pull $IMAGE_TAG
+            docker pull "${{ steps.image.outputs.IMAGE_TAG }}"
 
             echo "Stopping old containers"
             docker compose down --remove-orphans
