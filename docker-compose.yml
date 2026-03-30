@@ -7,7 +7,7 @@ services:
     environment:
       - DATABASE_URL=${DATABASE_URL}
       - REDIS_URL=${REDIS_URL}
-      - REDIS_TLL=${REDIS_TTL}
+      - REDIS_TTL=${REDIS_TTL}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - GITHUB_SECRET=${GITHUB_SECRET}
       - CLAUDE_API_KEY=${CLAUDE_API_KEY}
