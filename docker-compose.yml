@@ -1,6 +1,6 @@
 services:
   backend:
-    image: khalelam/ai-reviewer:latest
+    image: khalelam/ai_reviewer:latest
     container_name: fastapi-backend
     ports:
       - "8000:8000"
