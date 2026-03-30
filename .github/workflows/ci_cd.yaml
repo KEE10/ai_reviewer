@@ -135,9 +135,11 @@ jobs:
         run: |
           ssh -i ~/.ssh/deploy_key ec2-user@${{ secrets.EC2_HOST }} "cat > /app/.env << 'EOF'
           DATABASE_URL=${{ secrets.DATABASE_URL }}
-          GH_TOKEN=${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN=${{ secrets.GH_TOKEN }}
           CLAUDE_API_KEY=${{ secrets.CLAUDE_API_KEY }}
-          GH_SECRET=${{ secrets.GH_SECRET }}
+          GITHUB_SECRET=${{ secrets.GH_SECRET }}
+          REDIS_TTL=${{ secrets.REDIS_TTL }}
+          REDIS_URL=${{ secrets.REDIS_URL }}
           EOF"
 
       - name: Deploy to EC2
@@ -160,7 +162,7 @@ jobs:
             docker-compose down --remove-orphans
 
             echo "Starting new containers"
-            docker-compose up -d
+            docker-compose up --env-file ./.env -d
 
             echo "Waiting for health check"
             sleep 10
