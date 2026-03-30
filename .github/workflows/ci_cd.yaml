@@ -152,21 +152,21 @@ jobs:
             echo  "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
             echo "Pulling new image"
-            docker pull ${{ env.DOCKER_HUB_REPOSITORY }}:latest
+            docker pull khalelam/ai_reviewer:latest
 
             cd /app
 
             echo "Stopping old containers"
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml down --remove-orphans
+            docker-compose down --remove-orphans
 
             echo "Starting new containers"
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+            docker-compose up -d
 
             echo "Waiting for health check"
             sleep 10
 
             echo "Checking container status"
-            docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps
+            docker-compose ps
 
             echo "Cleaning up old images"
             docker image prune -f
@@ -184,9 +184,9 @@ jobs:
             cd /app
 
             # Check if containers are running
-            if ! docker-compose -f docker-compose.yml -f docker-compose.prod.yml ps | grep -q "Up"; then
+            if ! docker-compose ps | grep -q "Up"; then
               echo "Containers are not running!"
-              docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs
+              docker-compose logs
               exit 1
             fi
 
@@ -194,7 +194,7 @@ jobs:
             HEALTH=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/health)
             if [ "$HEALTH" != "200" ]; then
               echo "Health check failed! Status: $HEALTH"
-              docker-compose -f docker-compose.yml -f docker-compose.prod.yml logs backend
+              docker-compose logs backend
               exit 1
             fi
 

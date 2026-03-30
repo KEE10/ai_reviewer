@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: khalelam/ai-reviewer:latest
     container_name: fastapi-backend
     ports:
       - "8000:8000"
